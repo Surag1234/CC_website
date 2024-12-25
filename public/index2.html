@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .recipe-list button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .recipe-list button:hover {
+            background-color: #45a049;
+        }
+
+        /* Media Query for Smaller Screens */
+        @media (max-width: 600px) {
+            .recipe-list button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+
+        /* Recipe Details */
+        .recipe-details {
+            margin-top: 20px;
+        }
+
+        .recipe-details h2 {
+            margin-bottom: 10px;
+        }
+
+        .recipe-details ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .recipe-details ul li {
+            margin-bottom: 5px;
+        }
+
+        .recipe-details .steps {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe List</h1>
+    <div class="recipe-list" id="recipeList">
+        <!-- Recipe Buttons will be dynamically populated here -->
+    </div>
+
+    <div class="recipe-details" id="recipeDetails" style="display: none;">
+        <h2 id="recipeTitle"></h2>
+        <h3>Ingredients:</h3>
+        <ul id="ingredientsList"></ul>
+        <h3>Calories:</h3>
+        <p id="calories"></p>
+        <h3>Steps:</h3>
+        <p class="steps" id="steps"></p>
+    </div>
+
+    <script>
+        const recipes = [
+            {
+                name: "Spaghetti Carbonara",
+                ingredients: ["Spaghetti", "Eggs", "Parmesan", "Pancetta", "Black Pepper"],
+                calories: "450 kcal per serving",
+                steps: "Boil pasta, cook pancetta, mix eggs with cheese, combine all."
+            },
+            {
+                name: "Chicken Curry",
+                ingredients: ["Chicken", "Onions", "Tomatoes", "Garlic", "Spices"],
+                calories: "500 kcal per serving",
+                steps: "Cook onions and garlic, add chicken and spices, simmer with tomatoes."
+            },
+            {
+                name: "Caesar Salad",
+                ingredients: ["Romaine Lettuce", "Croutons", "Parmesan", "Caesar Dressing"],
+                calories: "220 kcal per serving",
+                steps: "Toss lettuce, croutons, and parmesan with Caesar dressing."
+            },
+            {
+                name: "Pancakes",
+                ingredients: ["Flour", "Eggs", "Milk", "Sugar", "Butter"],
+                calories: "300 kcal per serving",
+                steps: "Mix ingredients, pour batter onto hot pan, cook until golden."
+            },
+            {
+                name: "Margherita Pizza",
+                ingredients: ["Pizza Dough", "Tomato Sauce", "Mozzarella", "Basil"],
+                calories: "400 kcal per slice",
+                steps: "Spread sauce on dough, add cheese and basil, bake in oven."
+            },
+            {
+                name: "Tacos",
+                ingredients: ["Tortillas", "Ground Beef", "Cheese", "Lettuce", "Salsa"],
+                calories: "250 kcal per taco",
+                steps: "Cook beef, fill tortillas with beef, cheese, and toppings."
+            },
+            {
+                name: "Vegetable Stir Fry",
+                ingredients: ["Mixed Vegetables", "Soy Sauce", "Garlic", "Ginger"],
+                calories: "180 kcal per serving",
+                steps: "Stir-fry vegetables with garlic, ginger, and soy sauce."
+            },
+            {
+                name: "Chocolate Cake",
+                ingredients: ["Flour", "Cocoa Powder", "Eggs", "Sugar", "Butter"],
+                calories: "450 kcal per slice",
+                steps: "Mix ingredients, bake in oven, let cool and frost."
+            },
+            {
+                name: "Grilled Cheese Sandwich",
+                ingredients: ["Bread", "Cheese", "Butter"],
+                calories: "300 kcal per sandwich",
+                steps: "Butter bread, add cheese, grill until crispy."
+            },
+            {
+                name: "Tomato Soup",
+                ingredients: ["Tomatoes", "Onions", "Garlic", "Cream", "Herbs"],
+                calories: "200 kcal per serving",
+                steps: "Cook tomatoes with onions and garlic, blend, add cream and herbs."
+            }
+        ];
+
+        const recipeList = document.getElementById("recipeList");
+        const recipeDetails = document.getElementById("recipeDetails");
+        const recipeTitle = document.getElementById("recipeTitle");
+        const ingredientsList = document.getElementById("ingredientsList");
+        const calories = document.getElementById("calories");
+        const steps = document.getElementById("steps");
+
+        // Populate Recipe Buttons
+        recipes.forEach((recipe, index) => {
+            const button = document.createElement("button");
+            button.textContent = recipe.name;
+            button.onclick = () => showRecipeDetails(index);
+            recipeList.appendChild(button);
+        });
+
+        // Show Recipe Details
+        function showRecipeDetails(index) {
+            const recipe = recipes[index];
+            recipeTitle.textContent = recipe.name;
+            ingredientsList.innerHTML = recipe.ingredients
+                .map(ingredient => `<li>${ingredient}</li>`)
+                .join("");
+            calories.textContent = recipe.calories;
+            steps.textContent = recipe.steps;
+
+            recipeList.style.display = "none";
+            recipeDetails.style.display = "block";
+        }
+
+        // Go Back to Recipe List
+        const backButton = document.createElement("button");
+        backButton.textContent = "Back to Recipe List";
+        backButton.style.marginTop = "20px";
+        backButton.onclick = () => {
+            recipeDetails.style.display = "none";
+            recipeList.style.display = "block";
+        };
+        recipeDetails.appendChild(backButton);
+    </script>
+</body>
+</html>
